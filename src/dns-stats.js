@@ -22,9 +22,26 @@ const { NotImplementedError } = require('../extensions/index.js');
  * }
  *
  */
-function getDNSStats(/* domains */) {
-  throw new NotImplementedError('Not implemented');
-  // remove line with error and write your code here
+ function getDNSStats(domains) {
+  let dnsStat = {};
+
+  for (dns of domains) {
+      let dnsNames = dns.split('.').reverse();
+      for (let i = 0; i < dnsNames.length; i++) {
+          let domain = '';
+          for (let j = 0; j <= i; j++) {
+              domain += '.' + dnsNames[j];
+          }
+
+          if (domain in dnsStat) {
+              dnsStat[domain]++;
+          } else {
+              dnsStat[domain] = 1;
+          }
+      }
+  }
+
+  return dnsStat;
 }
 
 module.exports = {
